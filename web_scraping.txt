@@ -1,0 +1,27 @@
+import requests
+from bs4 import BeautifulSoup
+
+# URL de la página web
+url = 'https://www.porsche.com/latin-america-es/_peru_/models/718/'
+
+# Realizar la solicitud HTTP
+response = requests.get(url)
+
+# Verificar si la solicitud fue exitosa (código 200)
+if response.status_code == 200:
+    # Analizar el contenido HTML de la página
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Encontrar todos los elementos con tag "div" y clase "m-14-image-wrapper"
+    image_wrapper_divs = soup.find_all('div', class_='m-14-image-wrapper')
+
+    # Iterar sobre los elementos encontrados
+    for image_wrapper_div in image_wrapper_divs:
+        # Encontrar todos los elementos "data-image-src" dentro del elemento "div"
+        data_image_src_values = [img['data-image-src'] for img in image_wrapper_div.find_all('img', attrs={'data-image-src': True})]
+
+        # Imprimir los valores del atributo "data-image-src"
+        for value in data_image_src_values:
+            print(value)
+else:
+    print(f'Error al acceder a la página. Código de estado: {response.status_code}')
