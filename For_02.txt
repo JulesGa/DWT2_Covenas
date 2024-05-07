@@ -1,0 +1,14 @@
+Dinero_por_Estado =
+SUMX (
+    'BBDD_ventas',
+    IF (
+        'BBDD_ventas'[Nom_estado] = "por confirmar"
+            || 'BBDD_ventas'[Nom_estado] = "entregado"
+            || (
+                'BBDD_ventas'[Nom_estado] = "por entregar"
+                    && 'BBDD_ventas'[Fecha_entrega_factura] < TODAY()
+            ),
+        'BBDD_ventas'[val_ven_net],
+        0
+    )
+)
