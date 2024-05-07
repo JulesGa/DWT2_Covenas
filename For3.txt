@@ -1,0 +1,8 @@
+Clientes < 80% Acumulado = 
+CALCULATE(
+    COUNTROWS(TablaClientes),
+    FILTER(
+        TablaClientes,
+        [Acumulado] < CALCULATE(SUM(TablaClientes[Acumulado]), ALL(TablaClientes)) * 0.8
+    )
+)
