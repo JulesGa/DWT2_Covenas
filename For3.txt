@@ -45,3 +45,11 @@ for filename in os.listdir(directorio):
 
 # Concatenar todos los DataFrames en uno solo
 datos_totales = pd.concat(dataframes, ignore_index=True)
+-------------
+
+let
+    Origen = Excel.Workbook(File.Contents("Ruta/del/archivo.xlsb"), null, true),
+    Hoja1 = Origen{[Item="Hoja1",Kind="Sheet"]}[Data],
+    #"Promocionar encabezados" = Table.PromoteHeaders(Hoja1, [PromoteAllScalars=true])
+in
+    #"Promocionar encabezados"
