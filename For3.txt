@@ -6,3 +6,22 @@ CALCULATE(
         [Acumulado] < CALCULATE(SUM(TablaClientes[Acumulado]), ALL(TablaClientes)) * 0.8
     )
 )
+import os
+import pandas as pd
+
+# Directorio donde se encuentran los archivos
+directorio = r"\\LFSQLSERVER\Interfaces_Data_Mart\Ventasregistradas"
+
+# Lista para almacenar los DataFrames de cada archivo
+dataframes = []
+
+# Leer cada archivo del año 2024 y agregar su DataFrame a la lista
+for filename in os.listdir(directorio):
+    # Verificar si el archivo sigue el formato deseado y no tiene duplicados
+    if filename.startswith("DMINTERFA202401") and filename.endswith(".TXT") and len(filename) == 20:
+        archivo_path = os.path.join(directorio, filename)
+        data = pd.read_fwf(archivo_path, widths=[end - start for start, end in anchos], names=nombres_columnas, encoding='1252')
+        dataframes.append(data)
+
+# Concatenar todos los DataFrames en uno solo
+datos_totales = pd.concat(dataframes, ignore_index=True)
