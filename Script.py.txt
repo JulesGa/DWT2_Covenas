@@ -1,0 +1,36 @@
+tengo el siguiente script, puedes adaptarlo para que funcione directamente desde Power BI favor de omitir la parte en la que guardamos el csv.
+
+import pandas as pd
+
+# Definir los anchos de cada columna
+anchos = [
+    (0, 4), (4, 12), (12, 22), (22, 62), (62, 65), (65, 67), (67, 92), (92, 94), (94, 119), (119, 137),
+    (137, 177), (177, 195), (195, 235), (235, 237), (237, 239), (239, 249), (249, 265), (265, 300), (300, 310), (310, 320),
+    (320, 322), (322, 342), (342, 344), (344, 364), (364, 366), (366, 386), (386, 401), (401, 581), (581, 583), (583, 643),
+    (643, 645), (645, 705), (705, 707), (707, 767), (767, 770), (770, 810), (810, 813), (813, 833), (833, 836), (836, 861),
+    (861, 863), (863, 888), (888, 892), (892, 912), (912, 916), (916, 922), (922, 926), (926, 946), (946, 956), (956, 964),
+    (964, 972), (972, 980), (980, 990), (990, 994), (994, 1014), (1014, 1030), (1030, 1046), (1046, 1062), (1062, 1063), (1063, 1073),
+    (1073, 1077), (1077, 1127), (1127, 1129), (1129, 1149), (1149, 1164), (1164, 1167), (1167, 1180), (1180, 1185), (1185, 1196),
+    (1196, 1209), (1209, 1224), (1224, 1225), (1225, 1226), (1226, 1239), (1239, 1251), (1251, 1264), (1264, 1266), (1266, 1291),
+    (1291, 1293), (1293, 1318), (1318, 1321), (1321, 1361), (1361, 1363), (1363, 1371), (1371, 1373), (1373, 1388), (1388, 1390),
+    (1390, 1410), (1410, 1425), (1425, 1485), (1485, 1487), (1487, 1547), (1547, 1549), (1549, 1609), (1609, 1611), (1611, 1671),
+    (1671, 1706), (1706, 1838), (1838, 1840),(1840, 1860)
+]
+#El siguiente script genera y coloca el nombre a cada columna
+nombres_columnas=["Identifi","Fec_Doc","Cod_Merc","Nom_Merc","Tip_Merc","Cod_Grupo","Nom_Grupo","Cod_Categ","Nom_Categ","Cod_Linea",
+"Nom_Linea","Cod_Mar","Nom_Mar","Tip_Clie","Tip_Pers","Cod_Clien","Ruc","Nom_Clien","Cod_Cc","Cod_Cb","Cod_Div","Nom_Div","Cod_Canal",
+"Nom_Canal","Cod_Subcanal","Nom_Subcanal","Cod_Ubigeo","Nom_Ubigeo","Cod_Dpto","Nom_Dpto","Cod_Prov","Nom_Prov","Cod_Dist","Nom_Dist",
+"Cod_Super","Nom_Super","Cod_Vend","Nom_Vend","Cod_Prom","Nom_Prom","Cod_Sucur","Nom_Sucur","Cod_Alm","Nom_Alm","Centro","Ubicacion",
+"Cod_Tip_Ped","Nom_Tip_Ped","Nro_Ped","Fec_Cre_Doc","Fecha","Fec_Doc_Ent","Nro_Doc","Cod_Tip_Doc","Nom_Tip_Doc","Nro_Doc_Ref","Nro_Fac_Sun",
+"Nro_Fac_Int","Doc_Anu","Lote","Cod_Cond_Pag","Nom_Cond_Pag","Cod_Tipo_Mov","Nom_Tipo_Mov","Can_Vta","Und","Pre_Unit","Moneda","Por_Dscto",
+"Val_Vta_Uni","Val_Vta_Net","Ind_Bonif","Ind_Consig","Val_Dscto","Tip_Cambio","Cost_Unit","Cod_Tip_Neg","Nom_Tip_Neg","Cod_Esp","Nom_Esp",
+"Cod_Mot","Nom_Mot","Tip_Estrag","Fec_Vcmto_Lote","Cod_Legacy","Nom_Legacy","Cod_Grupo_Division","Nom_Grupo_Division","Nom_Estado",
+"Nom_Dire_Envio","Cod_Dpto_Envio","Nom_Dpto_Envio","Cod_Prov_Envio","Nom_Prov_Envio","Cod_Dist_Envio","Nom_Dist_Envio","Cod_Orden_Compra",
+"Guifac","Recepcion","Tipo_Recepcion"
+]
+
+# Leer el archivo de texto con anchos fijos
+data = pd.read_fwf("DMINTERFA202404.TXT", widths=[end - start for start, end in anchos],names= nombres_columnas,encoding ='1252')
+
+# Guardar el resultado en un nuevo archivo CSV
+data.to_csv("DMINTERFA202404.csv", index=False)
