@@ -1,55 +1,48 @@
-Clientes < 80% Acumulado = 
-CALCULATE(
-    COUNTROWS(TablaClientes),
-    FILTER(
-        TablaClientes,
-        [Acumulado] < CALCULATE(SUM(TablaClientes[Acumulado]), ALL(TablaClientes)) * 0.8
-    )
+Market Share Act = 
+//En base al total general de su categoría.
+VAR _mspro= DIVIDE([Valor Actual],CALCULATE([Valor actual], ALL(Tabla_productos[DESCRIPCION])))
+VAR _mspromar= DIVIDE([Valor actual],CALCULATE([Valor actual],ALL(Tabla_productos[MARCA])))
+VAR _mssku= DIVIDE([Valor Actual],CALCULATE([Valor actual],ALL(Tabla_productos[SKU])))
+VAR _msskugene= DIVIDE([Valor Actual],CALCULATE([Valor Actual],ALL(Tabla_productos[SKU_GENERAL])))
+VAR _msmol= DIVIDE([Valor Actual],CALCULATE([Valor Actual],ALL(Tabla_productos[MOLECULAS])))
+VAR _msff1= DIVIDE([Valor Actual],CALCULATE([Valor Actual],ALL(Tabla_ff[FORMA_FARMACEUTICA_1])))
+VAR _msff2= DIVIDE([Valor Actual],CALCULATE([Valor Actual],ALL(Tabla_ff[FORMA_FARMACEUTICA_2])))
+VAR _msff3= DIVIDE([Valor Actual],CALCULATE([Valor Actual],ALL(Tabla_ff[FORMA_FARMACEUTICA_3])))
+
+//Calculo para el total general.
+VAR _claseterapeutica1= CALCULATE([Valor actual],ALL(Tabla_clases_terapeuticas[CT_NIVEL_1]))
+VAR _msct1= DIVIDE([Valor actual],_claseterapeutica1)
+-------------------------------------------------------------
+VAR _claseterapeutica2= CALCULATE([Valor actual],ALL(Tabla_clases_terapeuticas[CT_NIVEL_2]))
+VAR _msct2= DIVIDE([Valor actual],_claseterapeutica2)
+-------------------------------------------------------------
+VAR _claseterapeutica3= CALCULATE([Valor actual],ALL(Tabla_clases_terapeuticas[CT_NIVEL_3]))
+VAR _msct3= DIVIDE([Valor actual],_claseterapeutica3)
+-------------------------------------------------------------
+VAR _claseterapeutica4= CALCULATE([Valor actual],ALL(Tabla_clases_terapeuticas[CT_NIVEL_4]))
+VAR _msct4= DIVIDE([Valor actual],_claseterapeutica4)
+-------------------------------------------------------------
+VAR _corporacion= CALCULATE([Valor Actual],ALL(Tabla_corporaciones[CORPORACIONES]))
+VAR _mscorp= DIVIDE([Valor Actual],_corporacion)
+-------------------------------------------------------------
+VAR _mslab= DIVIDE([Valor actual],CALCULATE([Valor actual],ALLSELECTED(Tabla_corporaciones)))
+
+RETURN
+SWITCH(
+    TRUE(),
+    ISINSCOPE(Tabla_productos[DESCRIPCION]),_mspro,
+    ISINSCOPE(Tabla_productos[MARCA]),_mspromar,
+    ISINSCOPE(Tabla_productos[SKU]),_mssku,
+    ISINSCOPE(Tabla_productos[SKU_GENERAL]),_msskugene,
+    ISINSCOPE(Tabla_productos[MOLECULAS]),_msmol,
+    ISINSCOPE(Tabla_ff[FORMA_FARMACEUTICA_1]),_msff1,
+    ISINSCOPE(Tabla_ff[FORMA_FARMACEUTICA_2]),_msff2,
+    ISINSCOPE(Tabla_ff[FORMA_FARMACEUTICA_3]),_msff3,
+    ISINSCOPE(Tabla_clases_terapeuticas[CT_NIVEL_1]),_msct1,
+    ISINSCOPE(Tabla_clases_terapeuticas[CT_NIVEL_2]),_msct2,
+    ISINSCOPE(Tabla_clases_terapeuticas[CT_NIVEL_3]),_msct3,
+    ISINSCOPE(Tabla_clases_terapeuticas[CT_NIVEL_4]),_msct4,
+    ISINSCOPE(Tabla_corporaciones[CORPORACIONES]),_mscorp,
+    ISINSCOPE(Tabla_corporaciones[LABORATORIOS]),_mslab,
+    [Valor actual]
 )
-import os
-import pandas as pd
-
-# Directorio donde se encuentran los archivos
-directorio = r"\\LFSQLSERVER\Interfaces_Data_Mart\Ventasregistradas"
-
-# Lista para almacenar los DataFrames de cada archivo
-dataframes = []
-
-# Leer cada archivo del año 2024 y agregar su DataFrame a la lista
-for filename in os.listdir(directorio):
-    # Verificar si el archivo sigue el formato deseado y no tiene duplicados
-    if filename.startswith("DMINTERFA202401") and filename.endswith(".TXT") and len(filename) == 20:
-        archivo_path = os.path.join(directorio, filename)
-        data = pd.read_fwf(archivo_path, widths=[end - start for start, end in anchos], names=nombres_columnas, encoding='1252')
-        dataframes.append(data)
-
-# Concatenar todos los DataFrames en uno solo
-datos_totales = pd.concat(dataframes, ignore_index=True)
---------------------------------------------------------------------------------------------------------------------------------
-import os
-import pandas as pd
-
-# Directorio donde se encuentran los archivos
-directorio = r"\\LFSQLSERVER\Interfaces_Data_Mart\Ventasregistradas"
-
-# Lista para almacenar los DataFrames de cada archivo
-dataframes = []
-
-# Leer cada archivo del año 2024 y agregar su DataFrame a la lista
-for filename in os.listdir(directorio):
-    # Verificar si el archivo sigue el formato deseado y no tiene duplicados
-    if filename.startswith("DMINTERFA2024") and filename.endswith(".TXT") and len(filename) == 20:
-        archivo_path = os.path.join(directorio, filename)
-        data = pd.read_fwf(archivo_path, widths=[end - start for start, end in anchos], names=nombres_columnas, encoding='1252')
-        dataframes.append(data)
-
-# Concatenar todos los DataFrames en uno solo
-datos_totales = pd.concat(dataframes, ignore_index=True)
--------------
-
-let
-    Origen = Excel.Workbook(File.Contents("Ruta/del/archivo.xlsb"), null, true),
-    Hoja1 = Origen{[Item="Hoja1",Kind="Sheet"]}[Data],
-    #"Promocionar encabezados" = Table.PromoteHeaders(Hoja1, [PromoteAllScalars=true])
-in
-    #"Promocionar encabezados"
