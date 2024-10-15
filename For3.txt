@@ -46,3 +46,4 @@ SWITCH(
     ISINSCOPE(Tabla_corporaciones[LABORATORIOS]),_mslab,
     [Valor actual]
 )
+Este proyecto integra una conexión en tiempo real entre Salesforce y Power BI, optimizando el análisis de datos comerciales a través de una estructura robusta y automatizada. A través de Power Query, los datos se transforman y preparan para un modelado avanzado utilizando DAX, asegurando precisión en los cálculos y KPIs dinámicos. La solución se divide en dos componentes: un informe tipo boletín distribuido mediante suscripción dinámica para actualizaciones automáticas y un dashboard interactivo publicado en una aplicación de Power BI Service, que ofrece visualizaciones intuitivas con seguridad basada en roles y actualizaciones en tiempo real.
