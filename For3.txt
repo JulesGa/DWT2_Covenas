@@ -47,3 +47,9 @@ SWITCH(
     [Valor actual]
 )
 Este proyecto integra una conexión en tiempo real entre Salesforce y Power BI, optimizando el análisis de datos comerciales a través de una estructura robusta y automatizada. A través de Power Query, los datos se transforman y preparan para un modelado avanzado utilizando DAX, asegurando precisión en los cálculos y KPIs dinámicos. La solución se divide en dos componentes: un informe tipo boletín distribuido mediante suscripción dinámica para actualizaciones automáticas y un dashboard interactivo publicado en una aplicación de Power BI Service, que ofrece visualizaciones intuitivas con seguridad basada en roles y actualizaciones en tiempo real.
+
+Para resaltar mejor los beneficios de la vista móvil del boletín, podrías agregar más detalles que muestren el valor agregado. Aquí tienes una versión más detallada:
+
+“Boletín diario optimizado para dispositivos móviles, con diseño responsivo y formato PNG de alta calidad, garantizando una visualización clara y profesional en cualquier pantalla. Envío automatizado que asegura actualizaciones constantes, manteniendo a los usuarios informados en tiempo real, sin necesidad de ingresar a la plataforma de Power BI.”
+
+Esto destaca tanto la calidad del diseño como la automatización y conveniencia del boletín.
