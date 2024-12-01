@@ -1,38 +1,24 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-import time
+import requests
+import json
 
-# Configura Selenium
-driver = webdriver.Chrome()  # Asegúrate de tener el driver de Chrome instalado
-driver.get("https://opm-digemid.minsa.gob.pe/#/consulta-producto")
+def obtener_datos_productos(lista_productos):
+    url = "https://opm-digemid.minsa.gob.pe/api/consulta"  # Cambia a la URL de la API real
 
-# Espera que la página cargue
-time.sleep(5)
-
-# Realiza una búsqueda iterativa (por ejemplo, con letras A-Z)
-resultados = []
-for letra in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
-    try:
-        # Encuentra el cuadro de búsqueda
-        search_box = driver.find_element(By.ID, "id_busqueda")  # Cambia según el selector correcto
-        search_box.clear()
-        search_box.send_keys(letra)
-        search_box.send_keys(Keys.RETURN)
+    datos_completos = []
+    for producto in lista_productos:
+        parametros = {"nombre_producto": producto}  # Ajusta los parámetros según la API
+        respuesta = requests.get(url, params=parametros)
         
-        # Espera los resultados
-        time.sleep(3)
+        if respuesta.status_code == 200:
+            datos_completos.append(respuesta.json())
+        else:
+            print(f"Error con el producto: {producto}")
+    
+    # Guardar datos en archivo
+    with open("productos.json", "w") as archivo:
+        json.dump(datos_completos, archivo)
+    print("Datos guardados exitosamente.")
 
-        # Captura los resultados
-        productos = driver.find_elements(By.CLASS_NAME, "nombre_producto")  # Cambia según el selector correcto
-        for producto in productos:
-            resultados.append(producto.text)
-
-    except Exception as e:
-        print(f"Error al buscar con {letra}: {e}")
-        
-# Cierra el navegador
-driver.quit()
-
-# Muestra los resultados
-print(resultados)
+# Lista de productos a consultar
+productos = ["producto1", "producto2", "producto3"]
+obtener_datos_productos(productos)
