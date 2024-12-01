@@ -1,24 +1,59 @@
-import requests
-import json
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import pandas as pd
+import time
 
-def obtener_datos_productos(lista_productos):
-    url = "https://opm-digemid.minsa.gob.pe/api/consulta"  # Cambia a la URL de la API real
+# Configura el driver de Selenium
+driver_path = 'ruta_al_chromedriver'  # Cambia esto por la ruta al driver
+driver = webdriver.Chrome(driver_path)
 
-    datos_completos = []
-    for producto in lista_productos:
-        parametros = {"nombre_producto": producto}  # Ajusta los parámetros según la API
-        respuesta = requests.get(url, params=parametros)
-        
-        if respuesta.status_code == 200:
-            datos_completos.append(respuesta.json())
-        else:
-            print(f"Error con el producto: {producto}")
-    
-    # Guardar datos en archivo
-    with open("productos.json", "w") as archivo:
-        json.dump(datos_completos, archivo)
-    print("Datos guardados exitosamente.")
+# URL de la página
+url = "https://opm-digemid.minsa.gob.pe/#/consulta-producto"
+driver.get(url)
+time.sleep(5)  # Espera que la página cargue completamente
 
-# Lista de productos a consultar
-productos = ["producto1", "producto2", "producto3"]
-obtener_datos_productos(productos)
+# Lista de productos a buscar
+productos = ["productoabc", "paracetamol", "ibuprofeno"]  # Cambia según tus necesidades
+datos = []
+
+for producto in productos:
+    try:
+        # Encuentra el campo de búsqueda
+        search_box = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "id_del_campo_busqueda"))  # Ajusta el ID según sea necesario
+        )
+        search_box.clear()
+        search_box.send_keys(producto)
+        time.sleep(2)  # Espera a que aparezca la lista desplegable
+
+        # Selecciona el primer elemento de la lista desplegable
+        first_option = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "selector_lista_desplegable"))  # Ajusta el selector
+        )
+        first_option.click()
+        time.sleep(1)
+
+        # Haz clic en el botón de buscar
+        search_button = driver.find_element(By.ID, "id_boton_buscar")  # Ajusta el ID
+        search_button.click()
+        time.sleep(3)  # Espera a que se carguen los resultados
+
+        # Extrae los datos de la tabla
+        filas = driver.find_elements(By.CSS_SELECTOR, "selector_filas_tabla")  # Ajusta el selector
+        for fila in filas:
+            columnas = fila.find_elements(By.TAG_NAME, "td")
+            datos.append([columna.text for columna in columnas])
+
+    except Exception as e:
+        print(f"Error al procesar {producto}: {e}")
+
+# Cierra el navegador
+driver.quit()
+
+# Guarda los datos en un archivo CSV
+df = pd.DataFrame(datos, columns=["Columna1", "Columna2", "Columna3"])  # Ajusta los nombres de columnas
+df.to_csv("productos_digemid.csv", index=False)
+print("Datos guardados en productos_digemid.csv")
