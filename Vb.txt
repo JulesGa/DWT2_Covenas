@@ -1,44 +1,61 @@
 <!DOCTYPE html>
 <html>
-  <body style="font-family: Arial, sans-serif; background-color: #f7f7fc; padding: 20px;">
-    <table width="600" align="center" cellpadding="0" cellspacing="0" style="background-color: white; border-collapse: collapse; border: 1px solid #ddd;">
+  <body style="font-family: Arial, sans-serif; background-color: #f7f7fc; padding: 0; margin: 0;">
+    <table width="600" align="center" cellpadding="0" cellspacing="0" style="background-color: white; border: 1px solid #ddd; border-collapse: collapse;">
+      
+      <!-- Encabezado -->
       <tr style="background-color: #0077c8;">
         <td style="padding: 10px;">
           <img src="https://www.abbott.com/etc.clientlibs/abbott/clientlibs/clientlib-base/resources/images/logo.svg" width="120" alt="Abbott" />
         </td>
         <td align="right" style="color: white; font-size: 14px; padding: 10px;">Asuntos Regulatorios</td>
       </tr>
-      <tr>
-        <td colspan="2" style="padding: 20px;">
-          <h2 style="margin-top: 0; color: #333;">Recordatorio de respuesta a observación de DIGEMID</h2>
 
-          <!-- Semáforo de 3 pasos -->
-          <table width="100%" style="margin: 20px 0;">
+      <!-- Título -->
+      <tr>
+        <td colspan="2" align="center" style="padding: 20px 20px 10px 20px;">
+          <h2 style="margin: 0; color: #333;">Recordatorio de respuesta a observación de DIGEMID</h2>
+        </td>
+      </tr>
+
+      <!-- Semáforo -->
+      <tr>
+        <td colspan="2" style="padding: 10px 20px;">
+          <table width="100%">
             <tr align="center">
               <td>
-                <div style="width: 24px; height: 24px; margin: auto; background-color: {color1}; border-radius: 50%;">&nbsp;</div>
+                <div style="width: 24px; height: 24px; background-color: @{variables('color1')}; border-radius: 50%; margin: auto;"></div>
                 <div style="font-size: 12px; color: #333;">1</div>
               </td>
               <td><hr style="border: none; border-top: 2px solid #ccc; width: 100%;"></td>
               <td>
-                <div style="width: 24px; height: 24px; margin: auto; background-color: {color2}; border-radius: 50%;">&nbsp;</div>
+                <div style="width: 24px; height: 24px; background-color: @{variables('color2')}; border-radius: 50%; margin: auto;"></div>
                 <div style="font-size: 12px; color: #333;">2</div>
               </td>
               <td><hr style="border: none; border-top: 2px solid #ccc; width: 100%;"></td>
               <td>
-                <div style="width: 24px; height: 24px; margin: auto; background-color: {color3}; border-radius: 50%;">&nbsp;</div>
+                <div style="width: 24px; height: 24px; background-color: @{variables('color3')}; border-radius: 50%; margin: auto;"></div>
                 <div style="font-size: 12px; color: #333;">3</div>
               </td>
             </tr>
           </table>
+        </td>
+      </tr>
 
-          <p style="font-size: 14px; color: #333;">
-            Les informamos que está pendiente responder la notificación de observaciones emitida por Digemid en el plazo establecido.
+      <!-- Texto -->
+      <tr>
+        <td colspan="2" style="padding: 10px 20px;">
+          <p style="font-size: 14px; color: #333; margin: 0;">
+            Les informamos que está pendiente responder la notificación de observaciones emitida por DIGEMID en el plazo establecido.
             Le recomendamos tomar las medidas necesarias para levantar esta observación a la mayor brevedad posible, a fin de evitar cualquier inconveniente o interrupción en la comercialización del producto.
           </p>
+        </td>
+      </tr>
 
-          <!-- Tabla de productos -->
-          <table width="100%" cellpadding="5" cellspacing="0" style="border-collapse: collapse; margin-top: 20px;">
+      <!-- Tabla de productos -->
+      <tr>
+        <td colspan="2" style="padding: 20px;">
+          <table width="100%" cellpadding="5" cellspacing="0" style="border-collapse: collapse;">
             <tr style="background-color: #0077c8; color: white;">
               <th align="left">Producto</th>
               <th align="left">Concentración</th>
@@ -46,26 +63,24 @@
               <th align="left">RS</th>
               <th align="left">Fecha vencimiento</th>
             </tr>
-            {tabla_productos}
+            @{variables('tablaHTML')}
           </table>
+        </td>
+      </tr>
 
-          <!-- Botón de Excel -->
-          <div style="text-align: center; margin-top: 30px;">
-            <a href="{link_excel}" style="background-color: #0077c8; color: white; text-decoration: none; padding: 10px 20px; border-radius: 4px;">Ir a Excel</a>
-          </div>
+      <!-- Botón -->
+      <tr>
+        <td colspan="2" align="center" style="padding: 20px;">
+          <a href="@{variables('link_excel')}" style="background-color: #0077c8; color: white; text-decoration: none; padding: 10px 20px; border-radius: 4px;">Ir a Excel</a>
+        </td>
+      </tr>
 
-          <p style="font-size: 12px; color: gray; margin-top: 30px;">Este correo electrónico fue enviado automáticamente mediante Power Automate. Por favor, no respondas a este mensaje.</p>
+      <!-- Pie -->
+      <tr>
+        <td colspan="2" align="center" style="font-size: 12px; color: gray; padding: 10px;">
+          Este correo fue enviado automáticamente mediante Power Automate. Por favor, no respondas a este mensaje.
         </td>
       </tr>
     </table>
   </body>
 </html>
-
-
-<tr style="border-bottom: 1px solid #ddd;">
-  <td>@{items('Apply_to_each')?['Producto']}</td>
-  <td>@{items('Apply_to_each')?['Concentracion']}</td>
-  <td>@{items('Apply_to_each')?['FF']}</td>
-  <td>@{items('Apply_to_each')?['RS']}</td>
-  <td>@{items('Apply_to_each')?['FechaVencimiento']}</td>
-</tr>
