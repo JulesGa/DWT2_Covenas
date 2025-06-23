@@ -60,3 +60,12 @@
     </table>
   </body>
 </html>
+
+
+<tr style="border-bottom: 1px solid #ddd;">
+  <td>@{items('Apply_to_each')?['Producto']}</td>
+  <td>@{items('Apply_to_each')?['Concentracion']}</td>
+  <td>@{items('Apply_to_each')?['FF']}</td>
+  <td>@{items('Apply_to_each')?['RS']}</td>
+  <td>@{items('Apply_to_each')?['FechaVencimiento']}</td>
+</tr>
