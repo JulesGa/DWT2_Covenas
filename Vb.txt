@@ -1,18 +1,62 @@
-Sub UnprotectSheet()
-    Dim i As Integer, j As Integer, k As Integer
-    Dim l As Integer, m As Integer, n As Integer
-    On Error Resume Next
-    For i = 65 To 66: For j = 65 To 66: For k = 65 To 66
-    For l = 65 To 66: For m = 65 To 66: For i1 = 65 To 66
-    For i2 = 65 To 66: For i3 = 65 To 66: For i4 = 65 To 66
-    For i5 = 65 To 66: For i6 = 65 To 66: For n = 32 To 126
-        ActiveSheet.Unprotect Chr(i) & Chr(j) & Chr(k) & _
-            Chr(l) & Chr(m) & Chr(i1) & Chr(i2) & Chr(i3) & _
-            Chr(i4) & Chr(i5) & Chr(i6) & Chr(n)
-        If ActiveSheet.ProtectContents = False Then
-            MsgBox "Hoja desprotegida!"
-            Exit Sub
-        End If
-    Next: Next: Next: Next: Next: Next
-    Next: Next: Next: Next: Next: Next
-End Sub
+<!DOCTYPE html>
+<html>
+  <body style="font-family: Arial, sans-serif; background-color: #f7f7fc; padding: 20px;">
+    <table width="600" align="center" cellpadding="0" cellspacing="0" style="background-color: white; border-collapse: collapse; border: 1px solid #ddd;">
+      <tr style="background-color: #0077c8;">
+        <td style="padding: 10px;">
+          <img src="https://www.abbott.com/etc.clientlibs/abbott/clientlibs/clientlib-base/resources/images/logo.svg" width="120" alt="Abbott" />
+        </td>
+        <td align="right" style="color: white; font-size: 14px; padding: 10px;">Asuntos Regulatorios</td>
+      </tr>
+      <tr>
+        <td colspan="2" style="padding: 20px;">
+          <h2 style="margin-top: 0; color: #333;">Recordatorio de respuesta a observación de DIGEMID</h2>
+
+          <!-- Semáforo de 3 pasos -->
+          <table width="100%" style="margin: 20px 0;">
+            <tr align="center">
+              <td>
+                <div style="width: 24px; height: 24px; margin: auto; background-color: {color1}; border-radius: 50%;">&nbsp;</div>
+                <div style="font-size: 12px; color: #333;">1</div>
+              </td>
+              <td><hr style="border: none; border-top: 2px solid #ccc; width: 100%;"></td>
+              <td>
+                <div style="width: 24px; height: 24px; margin: auto; background-color: {color2}; border-radius: 50%;">&nbsp;</div>
+                <div style="font-size: 12px; color: #333;">2</div>
+              </td>
+              <td><hr style="border: none; border-top: 2px solid #ccc; width: 100%;"></td>
+              <td>
+                <div style="width: 24px; height: 24px; margin: auto; background-color: {color3}; border-radius: 50%;">&nbsp;</div>
+                <div style="font-size: 12px; color: #333;">3</div>
+              </td>
+            </tr>
+          </table>
+
+          <p style="font-size: 14px; color: #333;">
+            Les informamos que está pendiente responder la notificación de observaciones emitida por Digemid en el plazo establecido.
+            Le recomendamos tomar las medidas necesarias para levantar esta observación a la mayor brevedad posible, a fin de evitar cualquier inconveniente o interrupción en la comercialización del producto.
+          </p>
+
+          <!-- Tabla de productos -->
+          <table width="100%" cellpadding="5" cellspacing="0" style="border-collapse: collapse; margin-top: 20px;">
+            <tr style="background-color: #0077c8; color: white;">
+              <th align="left">Producto</th>
+              <th align="left">Concentración</th>
+              <th align="left">FF</th>
+              <th align="left">RS</th>
+              <th align="left">Fecha vencimiento</th>
+            </tr>
+            {tabla_productos}
+          </table>
+
+          <!-- Botón de Excel -->
+          <div style="text-align: center; margin-top: 30px;">
+            <a href="{link_excel}" style="background-color: #0077c8; color: white; text-decoration: none; padding: 10px 20px; border-radius: 4px;">Ir a Excel</a>
+          </div>
+
+          <p style="font-size: 12px; color: gray; margin-top: 30px;">Este correo electrónico fue enviado automáticamente mediante Power Automate. Por favor, no respondas a este mensaje.</p>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
