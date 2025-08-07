@@ -84,3 +84,18 @@
     </table>
   </body>
 </html>
+Cuadrante = 
+SWITCH(
+    TRUE(),
+    'Reps'[Rep Index] < 90 && 'Reps'[Rep EI] < 90, "Rojo",
+    'Reps'[Rep Index] < 110 && 'Reps'[Rep EI] < 90, "Amarillo Izquierda",
+    'Reps'[Rep Index] >= 110 && 'Reps'[Rep EI] < 90, "Verde Izquierda",
+
+    'Reps'[Rep Index] < 90 && 'Reps'[Rep EI] < 110, "Amarillo Abajo",
+    'Reps'[Rep Index] < 110 && 'Reps'[Rep EI] < 110, "Verde Centro",
+    'Reps'[Rep Index] >= 110 && 'Reps'[Rep EI] < 110, "Azul Centro",
+
+    'Reps'[Rep Index] < 90 && 'Reps'[Rep EI] >= 110, "Verde Abajo Derecha",
+    'Reps'[Rep Index] < 110 && 'Reps'[Rep EI] >= 110, "Azul Derecha",
+    'Reps'[Rep Index] >= 110 && 'Reps'[Rep EI] >= 110, "Azul Arriba Derecha"
+)
